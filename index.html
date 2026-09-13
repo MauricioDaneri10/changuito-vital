@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#059669">
-  <title>Changuito Ahorro - Vital</title>
+  <title>Changuito Ahorro - Vital / Nini</title>
   <link rel="manifest" href="manifest.json">
   <style>
     :root {
@@ -14,10 +14,10 @@
       --primary: #10b981;
       --primary-hover: #059669;
       --accent: #38bdf8;
+      --warning: #f59e0b;
       --danger: #ef4444;
       --text: #f8fafc;
       --text-muted: #94a3b8;
-      --completed: #475569;
     }
 
     * {
@@ -40,46 +40,45 @@
       position: sticky;
       top: 0;
       z-index: 50;
-      background: rgba(11, 19, 41, 0.95);
+      background: rgba(11, 19, 41, 0.96);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--card-border);
-      padding: 12px 16px;
+      padding: 12px 16px 8px;
     }
 
     .header-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .title-group h1 {
       font-size: 1.15rem;
       font-weight: 700;
+      color: #fff;
       display: flex;
       align-items: center;
       gap: 6px;
-      color: #fff;
     }
 
-    .badge-vital {
+    .badge-market {
       background: #065f46;
       color: #6ee7b7;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       padding: 2px 8px;
       border-radius: 999px;
       font-weight: 600;
-      letter-spacing: 0.5px;
     }
 
     .budget-card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 12px;
-      padding: 10px 14px;
+      padding: 8px 12px;
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 8px;
+      grid-template-columns: 1fr 1.1fr 1fr;
+      gap: 6px;
       text-align: center;
     }
 
@@ -89,16 +88,16 @@
     }
 
     .budget-label {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       color: var(--text-muted);
       text-transform: uppercase;
-      font-weight: 600;
-      margin-bottom: 2px;
+      font-weight: 700;
     }
 
     .budget-val {
       font-size: 0.95rem;
       font-weight: 700;
+      margin-top: 2px;
     }
 
     .val-spent { color: var(--accent); }
@@ -106,10 +105,9 @@
     .val-remain { color: var(--primary); }
     .val-remain.danger { color: var(--danger); }
 
-    /* Progress bar */
     .progress-track {
       width: 100%;
-      height: 6px;
+      height: 5px;
       background: #334155;
       border-radius: 99px;
       margin-top: 8px;
@@ -120,15 +118,15 @@
       height: 100%;
       background: var(--primary);
       width: 0%;
-      transition: width 0.3s ease, background 0.3s ease;
+      transition: width 0.3s ease;
     }
 
-    /* Categories Tab Scroll */
+    /* Category Navigation */
     .cat-nav {
       display: flex;
       gap: 8px;
       overflow-x: auto;
-      padding: 12px 16px 4px;
+      padding: 10px 16px 4px;
       scrollbar-width: none;
     }
     .cat-nav::-webkit-scrollbar { display: none; }
@@ -138,12 +136,11 @@
       background: #1e293b;
       border: 1px solid var(--card-border);
       color: var(--text-muted);
-      padding: 6px 14px;
+      padding: 6px 12px;
       border-radius: 999px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.2s;
     }
 
     .cat-btn.active {
@@ -153,7 +150,7 @@
       font-weight: 700;
     }
 
-    /* List Container */
+    /* Items List */
     .list-container {
       padding: 10px 16px;
       display: flex;
@@ -166,37 +163,37 @@
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 12px;
-      padding: 12px;
+      padding: 10px 12px;
       display: flex;
-      align-items: center;
-      gap: 12px;
+      flex-direction: column;
+      gap: 8px;
       transition: all 0.2s ease;
     }
 
     .item-card.checked {
-      background: #141e33;
+      background: #131d31;
       border-color: #1e293b;
-      opacity: 0.65;
+      opacity: 0.7;
     }
 
-    .item-card.checked .item-name {
-      text-decoration: line-through;
-      color: var(--text-muted);
+    .card-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    /* Custom Checkbox */
     .custom-check {
-      width: 28px;
-      height: 28px;
-      min-width: 28px;
+      width: 26px;
+      height: 26px;
+      min-width: 26px;
       border-radius: 8px;
       border: 2px solid #64748b;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      background: transparent;
-      transition: all 0.2s;
+      font-weight: 700;
+      font-size: 0.9rem;
     }
 
     .item-card.checked .custom-check {
@@ -205,9 +202,10 @@
       color: #064e3b;
     }
 
-    .item-details {
+    .item-title-box {
       flex: 1;
       min-width: 0;
+      cursor: pointer;
     }
 
     .item-name-row {
@@ -221,68 +219,100 @@
       font-size: 0.95rem;
       font-weight: 600;
       color: #fff;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    }
+
+    .item-card.checked .item-name {
+      text-decoration: line-through;
+      color: var(--text-muted);
     }
 
     .item-sub {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--text-muted);
-      margin-top: 2px;
-      line-height: 1.2;
+      margin-top: 1px;
     }
 
-    .item-badge {
-      font-size: 0.65rem;
-      padding: 2px 6px;
-      border-radius: 6px;
+    .btn-edit {
       background: #334155;
-      color: #cbd5e1;
-      font-weight: 600;
-      white-space: nowrap;
+      border: none;
+      color: #94a3b8;
+      border-radius: 6px;
+      padding: 3px 6px;
+      font-size: 0.72rem;
+      cursor: pointer;
     }
 
-    /* Inline Price Input */
-    .price-box {
-      width: 80px;
+    /* Calculator Controls row (Quantity & Unit Price) */
+    .calc-row {
       display: flex;
-      flex-direction: column;
-      align-items: flex-end;
+      align-items: center;
+      justify-content: space-between;
+      background: #0f172a;
+      border-radius: 8px;
+      padding: 6px 8px;
+      gap: 8px;
     }
 
-    .price-box label {
+    .qty-control {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-qty {
+      width: 26px;
+      height: 26px;
+      background: #334155;
+      border: none;
+      color: #fff;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .btn-qty:active { background: var(--primary); color: #000; }
+
+    .qty-display {
+      font-size: 0.85rem;
+      font-weight: 700;
+      min-width: 24px;
+      text-align: center;
+      color: #e2e8f0;
+    }
+
+    .unit-price-box {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .unit-price-box label {
       font-size: 0.65rem;
       color: var(--text-muted);
-      margin-bottom: 2px;
     }
 
-    .price-input {
-      width: 100%;
-      background: #0f172a;
+    .unit-input {
+      width: 72px;
+      background: #1e293b;
       border: 1px solid #475569;
       border-radius: 6px;
       color: #38bdf8;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 700;
       text-align: right;
-      padding: 4px 6px;
-    }
-
-    .price-input:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
-
-    .btn-delete {
-      background: transparent;
-      border: none;
-      color: #64748b;
       padding: 4px;
-      font-size: 1rem;
-      cursor: pointer;
     }
-    .btn-delete:active { color: var(--danger); }
+    .unit-input:focus { outline: none; border-color: var(--accent); }
+
+    .subtotal-tag {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--primary);
+      white-space: nowrap;
+    }
 
     /* Bottom Action Bar */
     .bottom-bar {
@@ -290,10 +320,10 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background: rgba(15, 23, 42, 0.95);
+      background: rgba(15, 23, 42, 0.96);
       backdrop-filter: blur(12px);
       border-top: 1px solid var(--card-border);
-      padding: 12px 16px;
+      padding: 10px 16px;
       display: flex;
       gap: 10px;
       z-index: 100;
@@ -303,7 +333,7 @@
       flex: 1;
       padding: 12px;
       border-radius: 12px;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 700;
       border: none;
       cursor: pointer;
@@ -311,20 +341,12 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
-    .btn-primary {
-      background: var(--primary);
-      color: #064e3b;
-    }
+    .btn-primary { background: var(--primary); color: #064e3b; }
+    .btn-whatsapp { background: #25d366; color: #064e3b; }
 
-    .btn-whatsapp {
-      background: #25d366;
-      color: #064e3b;
-    }
-
-    /* Modal for Adding Item */
+    /* Modal Sheet */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -340,7 +362,7 @@
       background: var(--card-bg);
       border-top-left-radius: 20px;
       border-top-right-radius: 20px;
-      padding: 20px;
+      padding: 18px;
       width: 100%;
       max-width: 500px;
       box-shadow: 0 -10px 25px rgba(0,0,0,0.5);
@@ -353,14 +375,14 @@
     }
 
     .form-group {
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .form-group label {
       display: block;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: var(--text-muted);
-      margin-bottom: 4px;
+      margin-bottom: 3px;
       font-weight: 600;
     }
 
@@ -369,20 +391,21 @@
       background: #0f172a;
       border: 1px solid var(--card-border);
       border-radius: 8px;
-      padding: 10px;
+      padding: 9px;
       color: #fff;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
     }
 
-    .form-control:focus {
-      outline: none;
-      border-color: var(--primary);
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
     }
 
     .modal-btns {
       display: flex;
-      gap: 10px;
-      margin-top: 16px;
+      gap: 8px;
+      margin-top: 14px;
     }
 
     .btn-cancel {
@@ -390,7 +413,16 @@
       background: #334155;
       color: #cbd5e1;
       border: none;
-      padding: 12px;
+      padding: 10px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    .btn-delete-modal {
+      background: #7f1d1d;
+      color: #fca5a5;
+      border: none;
+      padding: 10px 14px;
       border-radius: 10px;
       font-weight: 600;
     }
@@ -398,24 +430,24 @@
 </head>
 <body>
 
-  <!-- Sticky Header & Dashboard -->
+  <!-- Sticky Header -->
   <header>
     <div class="header-top">
       <div class="title-group">
-        <h1>🛒 Changuito Vital</h1>
-        <span class="badge-vital">PRECIOS X3</span>
+        <h1>🛒 Changuito Ahorro</h1>
+        <span class="badge-market">VITAL / NINI</span>
       </div>
-      <div style="font-size: 0.75rem; color: #94a3b8;" id="item-stats">0/0 comprados</div>
+      <div style="font-size: 0.72rem; color: #94a3b8;" id="item-stats">0/0 en chango</div>
     </div>
 
-    <!-- Budget Counter -->
+    <!-- Live Budget Dashboard -->
     <div class="budget-card">
       <div class="budget-col">
         <span class="budget-label">Presupuesto</span>
         <span class="budget-val val-budget" id="display-budget" onclick="editBudget()">$350.000 ✏️</span>
       </div>
       <div class="budget-col">
-        <span class="budget-label">Total en Chango</span>
+        <span class="budget-label">En Chango</span>
         <span class="budget-val val-spent" id="display-spent">$0</span>
       </div>
       <div class="budget-col">
@@ -429,7 +461,7 @@
     </div>
   </header>
 
-  <!-- Categories Filter -->
+  <!-- Categories Navigation -->
   <div class="cat-nav">
     <button class="cat-btn active" onclick="filterCat('todos', this)">Todos</button>
     <button class="cat-btn" onclick="filterCat('almacen', this)">Almacén</button>
@@ -439,36 +471,49 @@
     <button class="cat-btn" onclick="filterCat('frescos', this)">Lácteos/Frescos</button>
   </div>
 
-  <!-- Main Items List -->
-  <div class="list-container" id="items-list">
-    <!-- Populated via JavaScript -->
-  </div>
+  <!-- Items List Container -->
+  <div class="list-container" id="items-list"></div>
 
   <!-- Bottom Floating Actions -->
   <div class="bottom-bar">
-    <button class="btn-action btn-primary" onclick="openAddModal()">
-      <span>➕</span> Agregar Ítem
+    <button class="btn-action btn-primary" onclick="openCreateModal()">
+      <span>➕</span> Nuevo Producto
     </button>
     <button class="btn-action btn-whatsapp" onclick="shareWhatsApp()">
       <span>📲</span> WhatsApp
     </button>
   </div>
 
-  <!-- Add Item Modal -->
-  <div class="modal-overlay" id="add-modal" onclick="closeAddModal(event)">
+  <!-- Add / Edit Item Modal Sheet -->
+  <div class="modal-overlay" id="item-modal" onclick="closeModal(event)">
     <div class="modal-sheet" onclick="event.stopPropagation()">
-      <h2>➕ Agregar a la Lista</h2>
+      <h2 id="modal-title">Editar Producto</h2>
+      <input type="hidden" id="modal-item-id">
+
       <div class="form-group">
-        <label>Nombre del producto</label>
-        <input type="text" id="new-name" class="form-control" placeholder="Ej. Calditos verdura extra, Café...">
+        <label>Nombre del producto (ej. Fideos Capelettinis, Aceite Girasol)</label>
+        <input type="text" id="modal-name" class="form-control">
       </div>
+
       <div class="form-group">
-        <label>Detalle / Cantidad recomendada</label>
-        <input type="text" id="new-detail" class="form-control" placeholder="Ej. Llevar 3 para precio x3">
+        <label>Detalle / Variedad / Marca</label>
+        <input type="text" id="modal-detail" class="form-control" placeholder="Ej. Tirabuzón, o marca Canale">
       </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Cantidad (unidades)</label>
+          <input type="number" id="modal-qty" class="form-control" min="1" value="1">
+        </div>
+        <div class="form-group">
+          <label>Precio por unidad ($)</label>
+          <input type="number" id="modal-price" class="form-control" placeholder="Ej. 1100">
+        </div>
+      </div>
+
       <div class="form-group">
         <label>Categoría</label>
-        <select id="new-cat" class="form-control">
+        <select id="modal-cat" class="form-control">
           <option value="almacen">Almacén</option>
           <option value="conservas">Conservas / Enlatados</option>
           <option value="limpieza">Limpieza</option>
@@ -476,89 +521,94 @@
           <option value="frescos">Lácteos y Frescos</option>
         </select>
       </div>
+
       <div class="modal-btns">
+        <button class="btn-delete-modal" id="btn-delete-modal" onclick="deleteCurrentModalItem()">Eliminar</button>
         <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
-        <button class="btn-action btn-primary" onclick="saveNewItem()">Guardar</button>
+        <button class="btn-action btn-primary" onclick="saveModalItem()">Guardar</button>
       </div>
     </div>
   </div>
 
   <script>
-    // Initial Seed Data tailored for Vital Mayorista
     const DEFAULT_ITEMS = [
       // Almacén
-      { id: '1', name: 'Pack Leche Larga Vida', detail: '1 caja cerrada (10 o 12 u.)', cat: 'almacen', checked: false, price: 0 },
-      { id: '2', name: 'Fideos Secos (500g)', detail: '9 a 12 paquetes (llevar 3 de c/u p/precio x3)', cat: 'almacen', checked: false, price: 0 },
-      { id: '3', name: 'Tuco en bolsita / Puré Tomate', detail: '8 a 12 sobrecitos/tetra', cat: 'almacen', checked: false, price: 0 },
-      { id: '4', name: 'Calditos de verdura', detail: 'Display 12 o 24 cubos (Knorr/Maggi)', cat: 'almacen', checked: false, price: 0 },
-      { id: '5', name: 'Aceite de Girasol', detail: '3 botellas 900ml/1.5L o bidón 3L/5L', cat: 'almacen', checked: false, price: 0 },
-      { id: '6', name: 'Arroz Parboil (1 kg)', detail: '3 a 4 paquetes (no se pasa)', cat: 'almacen', checked: false, price: 0 },
-      { id: '7', name: 'Harina 000 (1 kg)', detail: '2 a 3 paquetes', cat: 'almacen', checked: false, price: 0 },
-      { id: '8', name: 'Sal fina y gruesa', detail: '1 paquete de cada una', cat: 'almacen', checked: false, price: 0 },
+      { id: '1', name: 'Pack Leche Larga Vida', detail: 'Caja x10 o x12 litros', cat: 'almacen', qty: 1, unitPrice: 0, checked: false },
+      { id: '2', name: 'Fideos Guiseros / Tirabuzón', detail: 'Paquetes 500g (llevar 3 para precio x3)', cat: 'almacen', qty: 6, unitPrice: 0, checked: false },
+      { id: '3', name: 'Fideos Largos / Tallarines', detail: 'Paquetes 500g', cat: 'almacen', qty: 3, unitPrice: 0, checked: false },
+      { id: '4', name: 'Tuco en bolsita / sobrecito', detail: 'Tuco listo o pomarola', cat: 'almacen', qty: 6, unitPrice: 0, checked: false },
+      { id: '5', name: 'Puré de Tomate común', detail: 'Tetra / sachet para estirar salsa', cat: 'almacen', qty: 4, unitPrice: 0, checked: false },
+      { id: '6', name: 'Calditos de verdura', detail: 'Display x12 o x24 cubos', cat: 'almacen', qty: 1, unitPrice: 0, checked: false },
+      { id: '7', name: 'Aceite de Girasol', detail: 'Botellas 900ml/1.5L o bidón 3L/5L', cat: 'almacen', qty: 3, unitPrice: 0, checked: false },
+      { id: '8', name: 'Arroz Parboil', detail: 'Bolsa 1 kg (no se pasa)', cat: 'almacen', qty: 3, unitPrice: 0, checked: false },
+      { id: '9', name: 'Harina 000', detail: 'Bolsa 1 kg', cat: 'almacen', qty: 3, unitPrice: 0, checked: false },
+      { id: '10', name: 'Sal fina y gruesa', detail: '1 paquete de cada una', cat: 'almacen', qty: 2, unitPrice: 0, checked: false },
 
       // Conservas
-      { id: '9', name: 'Arvejas en lata/tetra', detail: '4 a 6 latas (precio x3)', cat: 'conservas', checked: false, price: 0 },
-      { id: '10', name: 'Choclo lata (grano o cremoso)', detail: '3 a 4 latas', cat: 'conservas', checked: false, price: 0 },
-      { id: '11', name: 'Atún o Caballa', detail: '3 a 6 latas (caballa rinde más peso)', cat: 'conservas', checked: false, price: 0 },
-      { id: '12', name: 'Lentejas en lata/bolsa', detail: '3 latas o 1 bolsa seca 500g', cat: 'conservas', checked: false, price: 0 },
+      { id: '11', name: 'Arvejas en lata/tetra', detail: 'Proteína rápida económica', cat: 'conservas', qty: 4, unitPrice: 0, checked: false },
+      { id: '12', name: 'Choclo (cremoso o grano)', detail: 'Latas para tartas/arroz', cat: 'conservas', qty: 3, unitPrice: 0, checked: false },
+      { id: '13', name: 'Atún o Caballa', detail: 'Caballa rinde mucho más peso', cat: 'conservas', qty: 4, unitPrice: 0, checked: false },
 
       // Lácteos / Frescos
-      { id: '13', name: 'Manteca (200g)', detail: '2 panes (freezar 1 en film)', cat: 'frescos', checked: false, price: 0 },
-      { id: '14', name: 'Queso Cremoso', detail: '1 trozo de 1 kg si hay promo heladera', cat: 'frescos', checked: false, price: 0 },
+      { id: '14', name: 'Manteca (200g)', detail: 'Panes 200g (cortar y freezar 1)', cat: 'frescos', qty: 2, unitPrice: 0, checked: false },
+      { id: '15', name: 'Queso Cremoso', detail: 'Trozo 1 kg si hay promo', cat: 'frescos', qty: 1, unitPrice: 0, checked: false },
 
       // Limpieza
-      { id: '15', name: 'Jabón para ropa (líquido)', detail: '1 bidón de 3L o 5L (Ala/Skip/Zorro)', cat: 'limpieza', checked: false, price: 0 },
-      { id: '16', name: 'Lavandina', detail: '1 bidón 4L o 5L', cat: 'limpieza', checked: false, price: 0 },
-      { id: '17', name: 'Detergente platos', detail: '2 botellas 750ml o bidón chico', cat: 'limpieza', checked: false, price: 0 },
-      { id: '18', name: 'Papel Higiénico', detail: 'Fardo 24 o 30 rollos', cat: 'limpieza', checked: false, price: 0 },
-      { id: '19', name: 'Rollos de cocina', detail: 'Pack x3 grande', cat: 'limpieza', checked: false, price: 0 },
-      { id: '20', name: 'Desodorante de piso', detail: '1 botella 900ml concentrada', cat: 'limpieza', checked: false, price: 0 },
+      { id: '16', name: 'Jabón para ropa (líquido)', detail: 'Bidón 3L o 5L (Ala/Skip/Zorro)', cat: 'limpieza', qty: 1, unitPrice: 0, checked: false },
+      { id: '17', name: 'Lavandina', detail: 'Bidón 4L o 5L', cat: 'limpieza', qty: 1, unitPrice: 0, checked: false },
+      { id: '18', name: 'Detergente platos', detail: 'Botellas 750ml o bidón', cat: 'limpieza', qty: 2, unitPrice: 0, checked: false },
+      { id: '19', name: 'Papel Higiénico', detail: 'Fardo 24 o 30 rollos', cat: 'limpieza', qty: 1, unitPrice: 0, checked: false },
+      { id: '20', name: 'Rollos de cocina', detail: 'Pack x3 rollos', cat: 'limpieza', qty: 1, unitPrice: 0, checked: false },
 
       // Perfumería
-      { id: '21', name: 'Champú familiar (750/930ml)', detail: '2 botellas grandes (Plusbelle/Suave)', cat: 'perfumeria', checked: false, price: 0 },
-      { id: '22', name: 'Crema de enjuague (750/930ml)', detail: '2 botellas grandes', cat: 'perfumeria', checked: false, price: 0 },
-      { id: '23', name: 'Jabones de tocador', detail: '2 packs x3 (6 panes)', cat: 'perfumeria', checked: false, price: 0 },
-      { id: '24', name: 'Pasta dental', detail: '2 pomos grandes', cat: 'perfumeria', checked: false, price: 0 },
-      { id: '25', name: 'Desodorante corporal', detail: '2 unidades roll-on o spray', cat: 'perfumeria', checked: false, price: 0 }
+      { id: '21', name: 'Champú familiar (750/930ml)', detail: 'Envase familiar Plusbelle/Suave', cat: 'perfumeria', qty: 2, unitPrice: 0, checked: false },
+      { id: '22', name: 'Crema enjuague (750/930ml)', detail: 'Envase familiar', cat: 'perfumeria', qty: 2, unitPrice: 0, checked: false },
+      { id: '23', name: 'Jabones de tocador', detail: 'Packs x3 panes', cat: 'perfumeria', qty: 2, unitPrice: 0, checked: false },
+      { id: '24', name: 'Pasta dental', detail: 'Pomos grandes', cat: 'perfumeria', qty: 2, unitPrice: 0, checked: false },
+      { id: '25', name: 'Desodorante corporal', detail: 'Roll-on o spray', cat: 'perfumeria', qty: 2, unitPrice: 0, checked: false }
     ];
 
-    let items = JSON.parse(localStorage.getItem('vital_items')) || DEFAULT_ITEMS;
-    let budget = parseInt(localStorage.getItem('vital_budget')) || 350000;
+    // Migration / Loading
+    let items = JSON.parse(localStorage.getItem('vital_items_v2')) || DEFAULT_ITEMS;
+    let budget = parseInt(localStorage.getItem('vital_budget_v2')) || 350000;
     let currentFilter = 'todos';
 
     function saveState() {
-      localStorage.setItem('vital_items', JSON.stringify(items));
-      localStorage.setItem('vital_budget', budget.toString());
+      localStorage.setItem('vital_items_v2', JSON.stringify(items));
+      localStorage.setItem('vital_budget_v2', budget.toString());
       render();
     }
 
-    function toggleItem(id) {
+    function toggleCheck(id, event) {
+      if (event) event.stopPropagation();
       const item = items.find(i => i.id === id);
       if (item) {
         item.checked = !item.checked;
-        if (navigator.vibrate) navigator.vibrate(30);
+        if (navigator.vibrate) navigator.vibrate(35);
         saveState();
       }
     }
 
-    function updatePrice(id, val) {
+    function changeQty(id, delta, event) {
+      if (event) event.stopPropagation();
       const item = items.find(i => i.id === id);
       if (item) {
-        item.price = Math.max(0, parseInt(val) || 0);
+        item.qty = Math.max(1, (item.qty || 1) + delta);
         saveState();
       }
     }
 
-    function deleteItem(id, event) {
-      event.stopPropagation();
-      if (confirm("¿Borrar este ítem?")) {
-        items = items.filter(i => i.id !== id);
+    function updateUnitPrice(id, val, event) {
+      if (event) event.stopPropagation();
+      const item = items.find(i => i.id === id);
+      if (item) {
+        item.unitPrice = Math.max(0, parseInt(val) || 0);
         saveState();
       }
     }
 
     function editBudget() {
-      const nuevo = prompt("Ingresá tu presupuesto total en pesos:", budget);
+      const nuevo = prompt("Ingresá tu presupuesto total en pesos ($):", budget);
       if (nuevo && !isNaN(nuevo)) {
         budget = parseInt(nuevo);
         saveState();
@@ -573,14 +623,23 @@
     }
 
     function formatMoney(num) {
-      return "$" + num.toLocaleString("es-AR");
+      return "$" + (num || 0).toLocaleString("es-AR");
     }
 
     function render() {
-      // Calculate totals
-      const totalSpent = items.reduce((acc, cur) => acc + (cur.price || 0), 0);
+      // Total calculate on CHECKED items with prices (items in cart)
+      let totalSpent = 0;
+      let checkedCount = 0;
+
+      items.forEach(i => {
+        const sub = (i.qty || 1) * (i.unitPrice || 0);
+        if (i.checked) {
+          totalSpent += sub;
+          checkedCount++;
+        }
+      });
+
       const remaining = budget - totalSpent;
-      const checkedCount = items.filter(i => i.checked).length;
 
       document.getElementById('display-budget').innerText = formatMoney(budget) + " ✏️";
       document.getElementById('display-spent').innerText = formatMoney(totalSpent);
@@ -599,7 +658,7 @@
       const pct = budget > 0 ? Math.min(100, Math.max(0, (totalSpent / budget) * 100)) : 0;
       const bar = document.getElementById('progress-bar');
       bar.style.width = pct + "%";
-      bar.style.background = pct > 95 ? "var(--danger)" : (pct > 75 ? "#f59e0b" : "var(--primary)");
+      bar.style.background = pct > 95 ? "var(--danger)" : (pct > 75 ? "var(--warning)" : "var(--primary)");
 
       renderList();
     }
@@ -612,99 +671,164 @@
         ? items 
         : items.filter(i => i.cat === currentFilter);
 
-      // Sort: unchecked first, checked at bottom
+      // Unchecked first, checked last
       filtered.sort((a, b) => (a.checked === b.checked ? 0 : a.checked ? 1 : -1));
 
       filtered.forEach(item => {
         const card = document.createElement('div');
         card.className = `item-card ${item.checked ? 'checked' : ''}`;
-        card.onclick = () => toggleItem(item.id);
+
+        const subtotal = (item.qty || 1) * (item.unitPrice || 0);
 
         card.innerHTML = `
-          <div class="custom-check">
-            ${item.checked ? '✓' : ''}
-          </div>
-          <div class="item-details">
-            <div class="item-name-row">
-              <span class="item-name">${item.name}</span>
-              <span class="item-badge">${item.cat.toUpperCase()}</span>
+          <div class="card-top">
+            <div class="custom-check" onclick="toggleCheck('${item.id}', event)">
+              ${item.checked ? '✓' : ''}
             </div>
-            <div class="item-sub">${item.detail}</div>
+            <div class="item-title-box" onclick="toggleCheck('${item.id}', event)">
+              <div class="item-name-row">
+                <span class="item-name">${item.name}</span>
+                <button class="btn-edit" onclick="openEditModal('${item.id}', event)">✏️ Editar</button>
+              </div>
+              <div class="item-sub">${item.detail || ''}</div>
+            </div>
           </div>
-          <div class="price-box" onclick="event.stopPropagation()">
-            <label>Precio total</label>
-            <input type="number" 
-                   class="price-input" 
-                   placeholder="$" 
-                   value="${item.price > 0 ? item.price : ''}" 
-                   onchange="updatePrice('${item.id}', this.value)">
+
+          <!-- Price & Quantity Row -->
+          <div class="calc-row" onclick="event.stopPropagation()">
+            <div class="qty-control">
+              <button class="btn-qty" onclick="changeQty('${item.id}', -1, event)">−</button>
+              <span class="qty-display">${item.qty || 1} u.</span>
+              <button class="btn-qty" onclick="changeQty('${item.id}', 1, event)">+</button>
+            </div>
+
+            <div class="unit-price-box">
+              <label>c/u $</label>
+              <input type="number" 
+                     class="unit-input" 
+                     placeholder="0" 
+                     value="${item.unitPrice > 0 ? item.unitPrice : ''}" 
+                     oninput="updateUnitPrice('${item.id}', this.value, event)">
+            </div>
+
+            <div class="subtotal-tag">
+              ${subtotal > 0 ? '= ' + formatMoney(subtotal) : '$0'}
+            </div>
           </div>
-          <button class="btn-delete" onclick="deleteItem('${item.id}', event)">✕</button>
         `;
 
         container.appendChild(card);
       });
     }
 
-    // Modal logic
-    function openAddModal() {
-      document.getElementById('add-modal').style.display = 'flex';
-      document.getElementById('new-name').focus();
+    // Modal Sheet Handlers
+    function openCreateModal() {
+      document.getElementById('modal-title').innerText = "➕ Nuevo Producto";
+      document.getElementById('modal-item-id').value = "";
+      document.getElementById('modal-name').value = "";
+      document.getElementById('modal-detail').value = "";
+      document.getElementById('modal-qty').value = "1";
+      document.getElementById('modal-price').value = "";
+      document.getElementById('modal-cat').value = currentFilter === 'todos' ? 'almacen' : currentFilter;
+      document.getElementById('btn-delete-modal').style.display = 'none';
+      document.getElementById('item-modal').style.display = 'flex';
+      document.getElementById('modal-name').focus();
     }
 
-    function closeModal() {
-      document.getElementById('add-modal').style.display = 'none';
-      document.getElementById('new-name').value = "";
-      document.getElementById('new-detail').value = "";
+    function openEditModal(id, event) {
+      if (event) event.stopPropagation();
+      const item = items.find(i => i.id === id);
+      if (!item) return;
+
+      document.getElementById('modal-title').innerText = "✏️ Editar Producto";
+      document.getElementById('modal-item-id').value = item.id;
+      document.getElementById('modal-name').value = item.name;
+      document.getElementById('modal-detail').value = item.detail || '';
+      document.getElementById('modal-qty').value = item.qty || 1;
+      document.getElementById('modal-price').value = item.unitPrice > 0 ? item.unitPrice : '';
+      document.getElementById('modal-cat').value = item.cat || 'almacen';
+      document.getElementById('btn-delete-modal').style.display = 'block';
+      document.getElementById('item-modal').style.display = 'flex';
     }
 
-    function closeAddModal(e) {
-      if (e.target.id === 'add-modal') closeModal();
+    function closeModal(event) {
+      if (event && event.target.id !== 'item-modal' && event.target.className !== 'btn-cancel') return;
+      document.getElementById('item-modal').style.display = 'none';
     }
 
-    function saveNewItem() {
-      const name = document.getElementById('new-name').value.trim();
-      const detail = document.getElementById('new-detail').value.trim() || 'Comprar según necesidad';
-      const cat = document.getElementById('new-cat').value;
+    function saveModalItem() {
+      const id = document.getElementById('modal-item-id').value;
+      const name = document.getElementById('modal-name').value.trim();
+      const detail = document.getElementById('modal-detail').value.trim();
+      const qty = Math.max(1, parseInt(document.getElementById('modal-qty').value) || 1);
+      const unitPrice = Math.max(0, parseInt(document.getElementById('modal-price').value) || 0);
+      const cat = document.getElementById('modal-cat').value;
 
       if (!name) {
-        alert("Por favor escribí el nombre del producto");
+        alert("Por favor poné un nombre al producto.");
         return;
       }
 
-      items.unshift({
-        id: Date.now().toString(),
-        name,
-        detail,
-        cat,
-        checked: false,
-        price: 0
-      });
+      if (id) {
+        // Edit existing
+        const item = items.find(i => i.id === id);
+        if (item) {
+          item.name = name;
+          item.detail = detail;
+          item.qty = qty;
+          item.unitPrice = unitPrice;
+          item.cat = cat;
+        }
+      } else {
+        // Create new
+        items.unshift({
+          id: Date.now().toString(),
+          name,
+          detail,
+          qty,
+          unitPrice,
+          cat,
+          checked: false
+        });
+      }
 
-      closeModal();
+      document.getElementById('item-modal').style.display = 'none';
       saveState();
     }
 
-    // WhatsApp Share
+    function deleteCurrentModalItem() {
+      const id = document.getElementById('modal-item-id').value;
+      if (id && confirm("¿Borrar este producto de la lista?")) {
+        items = items.filter(i => i.id !== id);
+        document.getElementById('item-modal').style.display = 'none';
+        saveState();
+      }
+    }
+
+    // Share via WhatsApp
     function shareWhatsApp() {
       const pending = items.filter(i => !i.checked);
-      const done = items.filter(i => i.checked);
+      const inCart = items.filter(i => i.checked);
       
-      let msg = "🛒 *LISTA DE COMPRAS - VITAL*\n";
-      msg += `💰 *Presupuesto:* ${formatMoney(budget)}\n\n`;
+      let totalSpent = 0;
+      inCart.forEach(i => totalSpent += (i.qty || 1) * (i.unitPrice || 0));
+
+      let msg = "🛒 *LISTA DE COMPRAS (VITAL/NINI)*\n";
+      msg += `💰 *Presupuesto:* ${formatMoney(budget)} | *En chango:* ${formatMoney(totalSpent)}\n\n`;
 
       if (pending.length > 0) {
         msg += "⏳ *FALTAN COMPRAR:*\n";
         pending.forEach(i => {
-          msg += `◻️ *${i.name}* (${i.detail})\n`;
+          msg += `◻️ *${i.qty}u.* ${i.name} _(${i.detail || ''})_\n`;
         });
       }
 
-      if (done.length > 0) {
+      if (inCart.length > 0) {
         msg += "\n✅ *YA EN EL CHANGO:*\n";
-        done.forEach(i => {
-          const p = i.price > 0 ? ` - ${formatMoney(i.price)}` : '';
-          msg += `✔️ ~${i.name}~${p}\n`;
+        inCart.forEach(i => {
+          const sub = (i.qty || 1) * (i.unitPrice || 0);
+          const priceText = sub > 0 ? ` [${formatMoney(sub)}]` : '';
+          msg += `✔️ *${i.qty}u.* ~${i.name}~${priceText}\n`;
         });
       }
 
@@ -712,10 +836,10 @@
       window.open(`https://api.whatsapp.com/send?text=${encoded}`, '_blank');
     }
 
-    // Register Service Worker for offline capability
+    // Register Service Worker
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js')
-        .then(() => console.log("Offline SW registrado"))
+      navigator.serviceWorker.register('sw.js?v=2')
+        .then(() => console.log("SW v2 activo"))
         .catch(err => console.log("SW error", err));
     }
 

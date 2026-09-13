@@ -1,4 +1,4 @@
-const CACHE_NAME = 'changuito-vital-v1';
+const CACHE_NAME = 'changuito-vital-v2';
 const ASSETS = [
   './',
   './index.html',
